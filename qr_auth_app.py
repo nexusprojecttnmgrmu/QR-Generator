@@ -94,6 +94,6 @@ elif option == "Verify QR":
         st.code(qr_text)
 
         if result:
-            st.success("✅ This QR Code is AUTHENTIC (Watermark matched).")
+            st.success("✅ This QR Code is AUTHENTIC (Crypto matched).")
         else:
-            st.error("❌ This QR Code is FAKE or TAMPERED (Watermark mismatch).")
+            st.error("❌ This QR Code is FAKE or TAMPERED (Crypto mismatch).")
