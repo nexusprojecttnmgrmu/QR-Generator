@@ -68,7 +68,7 @@ if option == "Generate QR":
             start_pos = (img.size[0] - 10, img.size[1] - 10)
             watermarked_img = embed_watermark(img, secret_pattern, start_pos)
             
-            st.image(watermarked_img, caption="Watermarked QR Code", use_container_width=True)
+            st.image(watermarked_img, caption="NEXUS AUTH QR Code", use_container_width=True)
             
             buffered = io.BytesIO()
             watermarked_img.save(buffered, format="PNG")
