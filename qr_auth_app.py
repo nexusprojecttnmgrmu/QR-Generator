@@ -73,7 +73,7 @@ if option == "Generate QR":
             buffered = io.BytesIO()
             watermarked_img.save(buffered, format="PNG")
             b64 = base64.b64encode(buffered.getvalue()).decode()
-            href = f'<a href="data:file/png;base64,{b64}" download="watermarked_qr.png">📥 Download QR Code</a>'
+            href = f'<a href="data:file/png;base64,{b64}" download="NEXUSOG_qr.png">📥 Download QR Code</a>'
             st.markdown(href, unsafe_allow_html=True)
         else:
             st.warning("Please enter both medicine name and batch number.")
