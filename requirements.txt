@@ -1,4 +1,7 @@
 streamlit
-qrcode[pil]
-numpy
+qrcode
 pillow
+numpy
+pyzbar
+opencv-python-headless
+pandas
