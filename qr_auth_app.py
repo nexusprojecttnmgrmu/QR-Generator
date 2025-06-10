@@ -99,9 +99,9 @@ elif option == "Verify QR (Single)":
         st.code(qr_text)
 
         if result:
-            st.success("✅ This QR Code is AUTHENTIC (Crypto matched).")
+            st.success("✅ This QR Code is AUTHENTIC (Cryptokey matched).")
         else:
-            st.error("❌ This QR Code is FAKE or TAMPERED (Crypto mismatch).")
+            st.error("❌ This QR Code is FAKE or TAMPERED (Cryptokey mismatch).")
 
 # ----------------------------------------
 # QR Code Verification - Batch Upload
@@ -123,7 +123,7 @@ elif option == "Verify QR (Batch Upload)":
                 results.append({
                     "File Name": file.name,
                     "QR Data": qr_text,
-                    "Watermark Match": "Yes" if result else "No",
+                    "Cryptokey Match": "Yes" if result else "No",
                     "Verification Result": authenticity
                 })
 
@@ -131,7 +131,7 @@ elif option == "Verify QR (Batch Upload)":
                 results.append({
                     "File Name": file.name,
                     "QR Data": "Unreadable",
-                    "Watermark Match": "Error",
+                    "Cryptokey Match": "Error",
                     "Verification Result": f"Error: {str(e)}"
                 })
 
