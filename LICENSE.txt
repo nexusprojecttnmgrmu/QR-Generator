@@ -1,0 +1,10 @@
+Copyright (c) 2025 NEXUS
+
+All rights reserved.
+
+This software is proprietary and confidential.  
+Unauthorized copying, distribution, deployment, modification, or use is strictly prohibited without prior written permission from the owner.
+
+This project contains code, designs, and watermark mechanisms intended solely for verifying authenticity and preventing counterfeit use.
+
+Violators may be subject to legal action under applicable copyright and intellectual property laws.
