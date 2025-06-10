@@ -50,9 +50,11 @@ def decode_qr_opencv(image: Image.Image):
     return data if data else "Unreadable"
 
 st.title("🔐 QR Code Authenticator for Medicines")
+option = st.radio("Choose an action:", ["Generate QR", "Verify QR (Single)", "Verify QR (Batch Upload)"])
 
-option = st.radio("Choose an action:", ["Generate QR", "Verify QR"])
-
+# ----------------------------------------
+# QR Code Generation
+# ----------------------------------------
 if option == "Generate QR":
     st.subheader("🧪 QR Code Generator with Watermark")
     medicine_name = st.text_input("Enter Medicine Name:")
@@ -78,7 +80,10 @@ if option == "Generate QR":
         else:
             st.warning("Please enter both medicine name and batch number.")
 
-elif option == "Verify QR":
+# ----------------------------------------
+# QR Code Verification - Single File
+# ----------------------------------------
+elif option == "Verify QR (Single)":
     st.subheader("🔍 Verify Uploaded QR Code")
     uploaded_file = st.file_uploader("Upload a QR Code Image", type=["png", "jpg", "jpeg"])
     
@@ -97,3 +102,46 @@ elif option == "Verify QR":
             st.success("✅ This QR Code is AUTHENTIC (Crypto matched).")
         else:
             st.error("❌ This QR Code is FAKE or TAMPERED (Crypto mismatch).")
+
+# ----------------------------------------
+# QR Code Verification - Batch Upload
+# ----------------------------------------
+elif option == "Verify QR (Batch Upload)":
+    st.subheader("🧾 Batch Verification of QR Codes")
+    uploaded_files = st.file_uploader("Upload multiple QR Code images", accept_multiple_files=True, type=["png", "jpg", "jpeg"])
+
+    if uploaded_files:
+        results = []
+        for file in uploaded_files:
+            try:
+                img = Image.open(file).convert("RGB")
+                qr_text = decode_qr_opencv(img)
+                start_pos = (img.size[0] - 10, img.size[1] - 10)
+                result = verify_watermark(img, secret_pattern, start_pos)
+                authenticity = "✅ AUTHENTIC" if result else "❌ COUNTERFEIT"
+
+                results.append({
+                    "File Name": file.name,
+                    "QR Data": qr_text,
+                    "Watermark Match": "Yes" if result else "No",
+                    "Verification Result": authenticity
+                })
+
+            except Exception as e:
+                results.append({
+                    "File Name": file.name,
+                    "QR Data": "Unreadable",
+                    "Watermark Match": "Error",
+                    "Verification Result": f"Error: {str(e)}"
+                })
+
+        df = pd.DataFrame(results)
+        st.dataframe(df)
+
+        csv = df.to_csv(index=False).encode()
+        st.download_button(
+            label="📥 Download Verification Report",
+            data=csv,
+            file_name=f"qr_verification_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+            mime='text/csv',
+        )
